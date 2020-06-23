@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,12 @@ namespace DatingApp.API.Controllers
 {
     //http:localhost:500/api/values
     //dove values = [controller] = Values
+    [Authorize]                         //tutto ciò che sta nel ValuesController, deve essere una Authorize request
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
+    //ATTENZIONE!
+    //ControllerBase perché la nostra applicazione non é collegata direttamente alle Views (quindi no MVC) poiché Angular fornirà la parte View 
     {
         private readonly DataContext _context; //underscore é puramente usato in questo progetto per scelta, metodo privato
         public ValuesController(DataContext context)
@@ -30,7 +34,8 @@ namespace DatingApp.API.Controllers
             return Ok(values);
         }
 
-        // GET api/values/5
+
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {

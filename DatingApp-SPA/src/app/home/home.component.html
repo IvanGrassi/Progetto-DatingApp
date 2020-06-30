@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <div *ngIf="!registerMode" style="text-align : center">
+        <h1>Find your match</h1>
+        <p class="lead">Come on into view your matches... All you need to do is sign up!</p>
+        <div class="text-center">
+            <!--se clicco su register: visualizza la parte di codice presente nella pagina register -->
+            <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
+            <button class="btn btn-info btn-lg">Learn more</button>
+        </div>    
+    </div>
+</div>
+
+<div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <!--input: valori ricevuti dalla home (values from home) 
+                output: registerToggle = false: Ritorna alla homepage-->
+            <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+        </div>
+    </div>
+</div>
+

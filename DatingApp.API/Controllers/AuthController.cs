@@ -27,8 +27,8 @@ namespace DatingApp.API.Controllers
             _repo = repo;
         }
 
-
         //http://localhost:5000/api/auth/register
+        
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -56,8 +56,8 @@ namespace DatingApp.API.Controllers
             return StatusCode(201); //ritorno (per ora) una richiesta di "found" e quindi creato correttamente
         }
 
-
         //http://localhost:5000/api/auth/login
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {

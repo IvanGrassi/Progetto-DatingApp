@@ -15,6 +15,10 @@ using Microsoft.Extensions.Logging;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using DatingApp.API.Helpers;
 
 namespace DatingApp.API
 {
@@ -56,6 +60,21 @@ namespace DatingApp.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(builder => {
+                    builder.Run(async context => {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;  // recupera il codice dell'errore 500 (internal)
+
+                        var error = context.Features.Get<IExceptionHandlerFeature>();
+                        if (error != null)
+                        {
+                            context.Response.AddApplicationError(error.Error.Message);          //aggiunge un nuovo header alla risposta
+                            await context.Response.WriteAsync(error.Error.Message);             //visualizza la descrizione dell'errore
+                        }
+                    });
+                }); //aggiunge un middleware alla pipeline che cattura le exception...
             }
 
             //app.UseHttpsRedirection();

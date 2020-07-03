@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
         console.log('Registration successful');
       },
       (error) => {
-        console.log(error);
+        console.log(error); // username/password troppo corta, mancante, ecc..
       }
     );
   }

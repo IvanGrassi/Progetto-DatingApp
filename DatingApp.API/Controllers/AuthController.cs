@@ -32,6 +32,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
+
             //string e username li riceviamo come unico oggetto (tutto insieme)
             //validiamo la richiesta
 
@@ -61,7 +62,8 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            //riceve lo username e la password inseriti
+            
+            // riceve lo username e la password inseriti
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
             if (userFromRepo == null)    //non permette valori nulli

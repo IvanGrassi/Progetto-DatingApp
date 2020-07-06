@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*Bootstrap 4.5.0*/
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/*Tema united di bootswatch, unica cosa da fare per applicarlo é questa riga*/
+@import "../node_modules/bootswatch/dist/united/bootstrap.min.css";
+
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
+
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";

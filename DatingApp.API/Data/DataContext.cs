@@ -13,5 +13,6 @@ namespace DatingApp.API.Data
         public DbSet<Value> Values { get; set; }    //qui specifichiamo il nome delle tabelle che verranno create quando viene usato il comando scaffold
     
         public DbSet<User> Users { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

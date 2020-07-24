@@ -19,6 +19,7 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using DatingApp.API.Helpers;
+using AutoMapper;
 
 namespace DatingApp.API
 {
@@ -36,11 +37,17 @@ namespace DatingApp.API
         {
             //aggiunta della stringa di connessione del db Sqlite
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => // per la lettura dei json
+            {
+                opt.SerializerSettings.ReferenceLoopHandling =  // risolve l'errore: Self referencing loop detected for property 'user'
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddCors(); //permette di risolvere l'errore "blocked by CORS policy"
+            services.AddAutoMapper(typeof(DatingRepository).Assembly); // permette l'uso di automapper
 
+            services.AddTransient<Seed>();  // riferimento a classe seed.cs
             services.AddScoped<IAuthRepository, AuthRepository>();   //il servizio viene creato una volta per ogni richiesta, crea un istanza per ogni richesta http ma usa la stessa istanza all'interno della richiesta
-            
+            services.AddScoped<IDatingRepository, DatingRepository>(); 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

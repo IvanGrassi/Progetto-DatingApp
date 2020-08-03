@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root', // app.module.ts é root
@@ -9,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   // injectable permette di iniettare ... nel nostro servizio
 
-  baseUrl = 'http://localhost:5000/api/auth/';
+  baseUrl = environment.apiUrl + 'auth/'; // vedi environment.ts
   jwtHelper = new JwtHelperService();
   decodedToken: any; // usata per fare in modo di visualizzare il nome nella navbar (Welcome ...)
 

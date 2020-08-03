@@ -1,0 +1,37 @@
+.card:hover img {
+  transform: scale(1.2, 1.2); /*scaling asse x e y di 1.2*/
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+  opacity: 0.8;
+}
+
+.card img {
+  transform: scale(1, 1); /*ritorno dello scaling a 1.0 (dimensioni originali)*/
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+.card-img-wrapper {
+  overflow: hidden; /*lo sfondo alla transizione non straborda, ma va a occupare lo spazio della card*/
+  position: relative;
+}
+
+.member-icons {
+  position: absolute;
+  bottom: -30%;
+  left: 0;
+  right: 0;
+  margin-right: auto;
+  margin-left: auto;
+  opacity: 0; /*inizialmente invisibili finche non ci si passa con il mouse*/
+}
+
+.card-img-wrapper:hover .member-icons {
+  bottom: 0;
+  opacity: 1; /*i bottoni diventano completamente visibili*/
+}
+
+/*slide tra le member icons*/
+.animate {
+  transition: all 0.35s ease-in-out;
+}

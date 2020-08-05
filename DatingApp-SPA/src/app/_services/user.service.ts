@@ -20,4 +20,9 @@ export class UserService {
   getUser(id): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
+
+  // path dove verrà modificato lo user
+  updateUser(id: number, user: User) {
+    return this.http.put(this.baseUrl + 'users/' + id, user); // http://localhost:5000/api/users/2
+  }
 }

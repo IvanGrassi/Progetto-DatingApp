@@ -28,6 +28,10 @@ namespace DatingApp.API.Helpers
             CreateMap<Photo, PhotosForDetailedDto>();
 
             CreateMap<UserForUpdateDto, User>(); // mappa le proprietà per l'update presenti in UserForUpdateDto.cs
+        
+            CreateMap<Photo, PhotoForReturnDto>(); // mappa le proprietà per ritornare la foto presenti in PhotoFroReturnDto.cs
+        
+            CreateMap<PhotoForCreationDto, Photo>(); // mappa tutte le principali proprietà delle foto
         }
     }
 }

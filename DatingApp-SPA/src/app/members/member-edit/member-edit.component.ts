@@ -5,6 +5,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Photo } from 'src/app/_models/photo';
 
 @Component({
   selector: 'app-member-edit',
@@ -15,6 +16,8 @@ export class MemberEditComponent implements OnInit {
   // permette di accedere al form
   @ViewChild('editForm') editForm: NgForm;
   user: User;
+  photoUrl: string;
+
   @HostListener('window:beforeunload', ['$event'])
   // il listener ascolta l'host e intraprende un azione (avvisa che si sta uscendo dalla pagina
   // se clicco su un altra sezione mentre i form sono stati modificati)
@@ -37,6 +40,9 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.user = data.user;
     });
+    this.authService.currentPhotoUrl.subscribe(
+      (photoUrl) => (this.photoUrl = photoUrl)
+    );
   }
 
   // metodo che permette di aggiornare i dati dello user,
@@ -56,5 +62,10 @@ export class MemberEditComponent implements OnInit {
           this.alertify.error(error);
         }
       );
+  }
+
+  updateMainPhoto(photoUrl) {
+    // riceve il photo url della nuova foto e lo setta anche nella foto grande sulla sinistra
+    this.user.photoUrl = photoUrl;
   }
 }

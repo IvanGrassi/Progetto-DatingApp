@@ -2,3 +2,10 @@
 .dropdown-item {
   cursor: pointer;
 }
+
+/*setting immagine di profilo vicino alla scritta welcome*/
+img {
+  max-height: 50px;
+  border: 1px solid white;
+  display: inline;
+}

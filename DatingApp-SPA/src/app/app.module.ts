@@ -29,6 +29,8 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 export function tokenGetter() {
   return localStorage.getItem('token'); // il token viene ritornato dal local storage
@@ -50,6 +52,7 @@ Quando creiamo un component, viene aggiunto automaticamente qui e viene importat
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ Quando creiamo un component, viene aggiunto automaticamente qui e viene importat
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     NgxGalleryModule,
+    FileUploadModule,
     JwtModule.forRoot({
       // vedi configurazione su github: auth0/angular-jwt, voce usage injection
       config: {

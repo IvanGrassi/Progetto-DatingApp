@@ -25,4 +25,18 @@ export class UserService {
   updateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + 'users/' + id, user); // http://localhost:5000/api/users/2
   }
+
+  // path per settare la foto come principale
+  // http://localhost:5000/api/users/2/photos/15/setMain
+  setMainPhoto(userId: number, id: number) {
+    return this.http.post(
+      this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain',
+      {}
+    );
+  }
+
+  // http://localhost:5000/api/users/2/photos/15
+  deletePhoto(userId: number, id: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id);
+  }
 }

@@ -43,6 +43,7 @@ namespace DatingApp.API
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddCors(); //permette di risolvere l'errore "blocked by CORS policy"
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings")); // recupera impostazioni cloudinary da appsettings.json
             services.AddAutoMapper(typeof(DatingRepository).Assembly); // permette l'uso di automapper
 
             services.AddTransient<Seed>();  // riferimento a classe seed.cs

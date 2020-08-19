@@ -52,7 +52,7 @@ namespace DatingApp.API.Controllers
             // confronto id dello user che vuole fare la modifica con il token che il server riceve
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized(); // se non corrisponde: messaggio non autorizzato!
+                return Unauthorized(); // se non corrisponde: messaggio non autorizzato! (Unauthorized request)
             }
             // i dati contenuti in userForUpdateDto vengono mappati in userFromRepo
             // mapping: AutoMapperProfiles.cs

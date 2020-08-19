@@ -18,7 +18,8 @@ namespace DatingApp.API.Data
 
         public async Task<User> Login(string username, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);  //lo user viene salvato in una variabile, verifica se lo username é uguale a quello presente nel db
+            // ritorna anche la collection di foto che servirà per visualizzare la foto in Welcome user
+            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Username == username);  //lo user viene salvato in una variabile, verifica se lo username é uguale a quello presente nel db
 
             if(user == null)
             {

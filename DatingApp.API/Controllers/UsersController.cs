@@ -33,7 +33,7 @@ namespace DatingApp.API.Controllers
             return Ok(usersToReturn);   // risposta con codice 200 (ok) e utenti inviati
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUser")] // Name = GetUser verrà inviato all'authController
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id); // come sopra ma per lo specifico user tramite id

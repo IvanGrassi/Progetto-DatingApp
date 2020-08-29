@@ -49,15 +49,20 @@ namespace DatingApp.API.Controllers
             }
 
             //creazione di una nuova istanza della classe user
-            var userToCreate = new User
-            {
-                Username = userForRegisterDto.Username
-            };
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
             //verrà inviato lo username creato e la password collegata ad esso
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
-            return StatusCode(201); //ritorno (per ora) una richiesta di "found" e quindi creato correttamente
+            //return StatusCode(201); //ritorno (per ora) una richiesta di "found" e quindi creato correttamente
+            
+            // dati e proprietà dello user
+            var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser); 
+
+            // si rifà al metodo GetUser in UsersController.cs
+            // i dati dello user (userToReturn) verranno ritornati
+            return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn );
+            
         }
 
         //http://localhost:5000/api/auth/login

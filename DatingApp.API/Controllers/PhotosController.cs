@@ -70,7 +70,7 @@ namespace DatingApp.API.Controllers
             // verichiamo la presenza di dati nel file
             if(file.Length > 0)
             {
-                // leggiamo il file dell'immagine
+                // creiamo un nuovo FileStrea e leggiamo il file dell'immagine
                 using (var stream = file.OpenReadStream())
                 {
                     var uploadParams = new ImageUploadParams()
@@ -84,11 +84,11 @@ namespace DatingApp.API.Controllers
                     uploadResult = _cloudinary.Upload(uploadParams);    
                 }
             }
-            // popolazione dei dati presenti in photoForCreationDto
+            // popolazione dei dati presenti in photoForCreationDto aggiornandoli
             photoForCreationDto.Url = uploadResult.Uri.ToString();
             photoForCreationDto.PublicId = uploadResult.PublicId;
 
-            // viene mappato il photoForCreationDto nella foto basandosi sulle proprietà
+            // viene mappato il photoForCreationDto in Photo basandosi sulle proprietà
             var photo = _mapper.Map<Photo>(photoForCreationDto);
         
             // se é la prima foto che carica, diventa anche la foto principale del profilo

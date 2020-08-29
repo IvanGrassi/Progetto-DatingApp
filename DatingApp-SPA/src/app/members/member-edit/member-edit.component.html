@@ -15,7 +15,9 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <img class="card-img-top img-thumbnail" src="{{photoUrl}}" alt="{{user.knownAs}}">
+        <!--recupera l'url della foto dello user che ha loggato e la visualizza
+        se non ha caricato nessuna foto, viene visualizzata la foto di default-->
+        <img class="card-img-top img-thumbnail" src="{{photoUrl || '../../../assets/user.png'}}" alt="{{user.knownAs}}">
         <div class="card-body">
           <div>
             <strong>Location:</strong>

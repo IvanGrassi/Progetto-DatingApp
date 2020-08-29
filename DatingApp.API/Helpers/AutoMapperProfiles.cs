@@ -16,14 +16,16 @@ namespace DatingApp.API.Helpers
                 src.Photos.FirstOrDefault(p => p.IsMain).Url))                  // configurazione di PhotoUrl
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>          
                 src.DateOfBirth.CalculateAge()))                            // configurazione dell'età (calcolo: vedi in Extensions.cs)
-            .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>          
-                src.DateOfBirth.CalculateAge()));  
+            .ForMember(dest => dest.Age, opt =>{
+                opt.MapFrom(src => src.DateOfBirth.CalculateAge());
+            }); 
 
             CreateMap<User, UserForDetailedDto>()
-            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => 
-                src.Photos.FirstOrDefault(p => p.IsMain).Url))     // configurazione di PhotoUrl;
-            .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>          
-                src.DateOfBirth.CalculateAge()));  
+            .ForMember(dest => dest.PhotoUrl, opt =>                      
+                opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))                 
+            .ForMember(dest => dest.Age, opt =>{
+                opt.MapFrom(src => src.DateOfBirth.CalculateAge());
+            });                 
 
             CreateMap<Photo, PhotosForDetailedDto>();
 
@@ -32,6 +34,8 @@ namespace DatingApp.API.Helpers
             CreateMap<Photo, PhotoForReturnDto>(); // mappa le proprietà per ritornare la foto presenti in PhotoFroReturnDto.cs
         
             CreateMap<PhotoForCreationDto, Photo>(); // mappa tutte le principali proprietà delle foto
+        
+            CreateMap<UserForRegisterDto, User>();  // mappa le proprietà utilizzate per la registrazione dello user (UserForRegisterDto.vs)
         }
     }
 }

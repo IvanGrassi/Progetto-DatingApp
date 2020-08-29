@@ -10,6 +10,7 @@
 
 @import "../node_modules/alertifyjs/build/css/alertify.min.css";
 @import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 
 /*pannello con icone di dettaglio riguardanti lo user selezionato*/
 .tab-panel {

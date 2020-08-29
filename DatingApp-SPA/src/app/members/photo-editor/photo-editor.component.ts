@@ -74,6 +74,21 @@ export class PhotoEditorComponent implements OnInit {
         };
         // la foto viene inserita nell'array di foto
         this.photos.push(photo);
+
+        // se é la foto che viene caricata, é la PRIMA foto presente sul profilo:
+        // allora questa diventerà anche la foto principale e dovrà essere visualizzata
+
+        if (photo.isMain) {
+          // permette di cambiare la foto principale dello user
+          this.authService.changeMemberPhoto(photo.url);
+          // permette di evutare il cambio di foto se aggiorno la pagina
+          this.authService.currentUser.photoUrl = photo.url;
+          // sovrascrive l'oggetto user all'interno del localstorage con la nuova immagine
+          localStorage.setItem(
+            'user',
+            JSON.stringify(this.authService.currentUser)
+          );
+        }
       }
     };
   }
@@ -88,12 +103,15 @@ export class PhotoEditorComponent implements OnInit {
           this.currentMain = this.photos.filter((p) => p.isMain === true)[0]; // array di 1 elemento (solo la foto principale)
           this.currentMain.isMain = false;
           photo.isMain = true;
-          this.authService.changeMemberPhoto(photo.url); // permette di modificare anche la foto in welcome user
-          this.authService.currentUser.photoUrl = photo.url; // permette di evutare il cambio di foto se aggiorno la pagina
+          // permette di cambiare la foto principale dello user
+          this.authService.changeMemberPhoto(photo.url);
+          // permette di evutare il cambio di foto se aggiorno la pagina
+          this.authService.currentUser.photoUrl = photo.url;
+          // sovrascrive l'oggetto user all'interno del localstorage con la nuova immagine
           localStorage.setItem(
             'user',
             JSON.stringify(this.authService.currentUser)
-          ); // sostituisce la prop user all'interno del localstorage
+          );
         },
         (error) => {
           this.alertify.error(error);

@@ -20,8 +20,9 @@
   
     <div *ngIf="loggedIn()" class="dropdown" dropdown>
       <span class="mr-1">
-        <!--recupera l'url della foto dello user che ha loggato e la visualizza-->
-        <img src="{{photoUrl}}" alt="">
+        <!--recupera l'url della foto dello user che ha loggato e la visualizza
+        se non ha caricato nessuna foto, viene visualizzata la foto di default-->
+        <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
       </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
         Welcome {{authService.decodedToken?.unique_name | titlecase}}  <!--titlecase trasforma il testo in titolo-->

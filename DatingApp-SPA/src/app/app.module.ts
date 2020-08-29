@@ -9,6 +9,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -32,6 +33,7 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { RelativeTimePipe } from './pipes/relative-time.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem('token'); // il token viene ritornato dal local storage
@@ -54,6 +56,7 @@ Quando creiamo un component, viene aggiunto automaticamente qui e viene importat
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
+    RelativeTimePipe,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ Quando creiamo un component, viene aggiunto automaticamente qui e viene importat
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
+    TimeagoModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     NgxGalleryModule,

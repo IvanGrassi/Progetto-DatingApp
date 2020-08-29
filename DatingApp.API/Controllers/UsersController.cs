@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Data_Transfer_Objects;
+using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))] // permette di applicare il log ad ogni metodo richiamato dallo user
     [Authorize]     // autorizziamo tutti i metodi prima di ritornare dati
     [Route("api/[controller]")] //Controller viene sostituito con User(controller)
     [ApiController]

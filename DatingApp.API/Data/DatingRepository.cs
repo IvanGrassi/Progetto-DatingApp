@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatingApp.API.Helpers;
 using DatingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,11 +48,49 @@ namespace DatingApp.API.Data
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            // vengono ritornati gli users sottoforma di lista
-            var users = await _context.Users.Include(p => p.Photos).ToListAsync();
-            return users;
+            // otteniamo gli users dal context e li ordiniamo in modo discendente
+            var users = _context.Users.Include(p => p.Photos)
+            .OrderByDescending(u => u.LastActive).AsQueryable();
+
+            // ritorna i dati dello user dove l'id é = allo UserId (trovato nello UsersController)
+            users = users.Where(u => u.Id != userParams.UserId);
+
+            // ritorna i dati dello user dove il gender é = al Gender( trovato nello UsersController)
+            users = users.Where(u => u.Gender == userParams.Gender);
+            
+            // verifica il range di età (se < 18 anni o > 99)
+            if (userParams.MinAge != 18 || userParams.MaxAge != 99)
+            {
+                // data minima: oggi - 98 (non includo 99 perché andrei oltre il range)
+                var minDateOfBirth = DateTime.Today.AddYears(-userParams.MaxAge -1);
+                // data massima: oggi -18 
+                var maxDateOfBirth = DateTime.Today.AddYears(-userParams.MinAge);
+
+                // where dataMinima >= 18 e dataMassima <=99
+                users = users.Where(u => u.DateOfBirth >= minDateOfBirth && u.DateOfBirth <= maxDateOfBirth);
+            }
+
+            // ORDINAMENTO
+            if (string.IsNullOrEmpty(userParams.OrderBy))
+            {
+                switch (userParams.OrderBy)
+                {
+                    // se lo user params é settato su "created", gli users vengono ritornati
+                    // in base alla loro data di creazione (di iscrizione)
+                    case "created":
+                        users = users.OrderByDescending(u => u.Created);
+                        break;
+                    
+                    default:
+                        users = users.OrderByDescending(u => u.LastActive);
+                        break;
+                }
+            }
+
+            // ritorna una pagedList di users creando la PagedList con CreateAsync
+            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<bool> SaveAll()

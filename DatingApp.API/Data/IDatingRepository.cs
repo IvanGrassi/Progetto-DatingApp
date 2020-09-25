@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DatingApp.API.Helpers;
 using DatingApp.API.Models;
 
 namespace DatingApp.API.Data
@@ -14,8 +15,8 @@ namespace DatingApp.API.Data
          // metodo per salvare le modifiche
         Task<bool> SaveAll();   // verifica se c'é stato piü di un salvataggio nel database, se non c'é ritorna true
          // metodo per ottenere tutti gli user
-        Task<IEnumerable<User>> GetUsers();
-         // metodo per ottenere un singolo user
+        Task<PagedList<User>> GetUsers(UserParams userParams);
+         // metodo per ottenere un singolo user passando gli userParams
          Task<User> GetUser(int id);
          Task<Photo> GetPhoto(int id);
          Task<Photo> GetMainPhotoForUser(int userId);

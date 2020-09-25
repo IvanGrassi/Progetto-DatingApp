@@ -8,6 +8,9 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
+  pageNumber = 1; // pagina di partenza per la paginazione
+  pageSize = 5; // numero di risultati visibili per pagina
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -20,7 +23,8 @@ export class MemberListResolver implements Resolve<User[]> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     // quando si usa resolve: usiamo il metodo getUser per ottnere lo user che corrisponde a quell'id
-    return this.userService.getUsers().pipe(
+    // qui vengono recuperati i valori di paging (number e size)
+    return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
       catchError((error) => {
         // in caso di errore:
         this.alertify.error('Problem retrieving data');
